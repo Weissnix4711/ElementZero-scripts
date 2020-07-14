@@ -8,10 +8,10 @@ system.listenForEvent("minecraft:player_attacked_entity", ({data: eventData}) =>
         attacked_entity: attacked
     } = eventData;
 
-    let eventData = system.createEventData("minecraft:spawn_particle_attached_entity");
-    eventData.data.effect = "minecraft:redstone_ore_dust_particle";
-    eventData.data.offset = [ 0, 1, 0 ];
-    eventData.data.entity = attacked;
+    let particleEventData = system.createEventData("minecraft:spawn_particle_attached_entity");
+    particleEventData.data.effect = "minecraft:redstone_ore_dust_particle";
+    particleEventData.data.offset = [ 0, 1, 0 ];
+    particleEventData.data.entity = attacked;
 
-    system.broadcastEvent("minecraft:spawn_particle_attached_entity", eventData);
+    system.broadcastEvent("minecraft:spawn_particle_attached_entity", particleEventData);
 });
