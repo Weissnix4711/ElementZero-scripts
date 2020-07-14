@@ -26,15 +26,14 @@ system.listenForEvent("minecraft:entity_hurt", ({data: eventData}) => {
     const healthBefore = system.getComponent(entity, "minecraft:health").data.value;
     const healthNow = healthBefore - damage;
     let healthPercentage = percentage(healthNow, healthMax);
-    const entityData = system.getComponent(attacker, "minecraft:nameable").data.name;
-    const entityName = getPlayerByNAME(entityData);
+    const entityName = system.getComponent(entity, "minecraft:nameable").data.name;
 
     if (healthPercentage < 0) {healthPercentage = 0}
 
-    system.executeCommand(`scoreboard objectives remove "${entityName}HealthBar"`, () => {});
-    system.executeCommand(`scoreboard objectives add "${entityName}HealthBar" dummy "Health: ${healthPercentage}"`, () => {});
-    system.executeCommand(`scoreboard players "${entityName}" "${entityName}HealthBar" 0`, () => {});
-    system.executeCommand(`scoreboard objectives setdisplay belowname "${entityName}HealthBar"`, () => {});
+    system.executeCommand(`scoreboard objectives remove "${entityName}HB"`, () => {});
+    system.executeCommand(`scoreboard objectives add "${entityName}HB" dummy "Health: ${healthPercentage}"`, () => {});
+    system.executeCommand(`execute @a[name="${entityName}"] ~ ~ ~ scoreboard players add @s "${entityName}HB" 0`, () => {});
+    system.executeCommand(`scoreboard objectives setdisplay belowname "${entityName}HB"`, () => {});
 })
 
 console.log("Combat: playerHealthBar loaded");
