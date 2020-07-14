@@ -1,9 +1,9 @@
 # EZ Example Scripts
 
-### By [@Weissnix4711](https://github.com/Weissnix4711)
-
-This repo contains many scripts used by the Mine9 Factions and SMP servers.
-
-These are designed for use with [ElementZero](https://github.com/Element-0/ElementZero).
+This repo contains many scripts you may use in your own server. They are designed for use with [ElementZero](https://github.com/Element-0/ElementZero).
 
 To start, copy the scripts folder into `<ElementZero-Dir>/scripts`.
+
+## License
+
+All of these scripts are licensed under GPL v3.
