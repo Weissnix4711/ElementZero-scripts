@@ -1,6 +1,6 @@
 const system = server.registerSystem(0, 0);
 
-console.log("Combat: attackParticles loaded");
+console.log("attackParticles.js loaded");
 
 system.listenForEvent("minecraft:player_attacked_entity", ({data: eventData}) => {
     const {

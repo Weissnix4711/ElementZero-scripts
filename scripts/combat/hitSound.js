@@ -34,4 +34,4 @@ system.listenForEvent("minecraft:entity_death", ({data: eventData}) => {
     }
 });
 
-console.log("Combat: hitSound loaded");
+console.log("hitSound.js loaded");

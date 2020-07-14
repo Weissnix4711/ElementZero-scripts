@@ -36,4 +36,4 @@ system.listenForEvent("minecraft:entity_hurt", ({data: eventData}) => {
     system.executeCommand(`scoreboard objectives setdisplay belowname "${entityName}HB"`, () => {});
 })
 
-console.log("Combat: playerHealthBar loaded");
+console.log("playerHealthBar.js loaded");

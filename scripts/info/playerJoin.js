@@ -21,4 +21,4 @@ onPlayerInitialized(player => {
     system.executeCommand(`execute @a[name="${playerName}",scores={old=0}] ~ ~ ~ scoreboard players set @s old 1`,{});
 })
 
-console.log("Info: playerJoin loaded");
+console.log("playerJoin.js loaded");

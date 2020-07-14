@@ -7,7 +7,7 @@ import {
 } from "ez:chat";
 
 const system = server.registerSystem(0, 0);
-console.log("Info: chatCommands loaded");
+console.log("chatCommands.js loaded");
 
 //commands
 let suicide = ".suicide";
