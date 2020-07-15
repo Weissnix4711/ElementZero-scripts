@@ -23,7 +23,7 @@ onChat((cmdObject) => {
             let player = getPlayerByNAME(cmdObject.sender);
             let playerName = player.name;
             system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ difficulty p`, () => {});
-            system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ difficulty n`, () => {});	
+            system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ difficulty n`, () => {});
             system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ kill @e [type=item]`, () => {});
             system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tellraw @a {"rawtext":[{"text":"§bLag cleared!"}]}`, () => {});
         }

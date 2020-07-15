@@ -7,6 +7,7 @@ import {
 } from "ez:chat";
 
 const system = server.registerSystem(0, 0);
+
 console.log("chatClear.js loaded");
 
 let clearHelp = ['.cc help'];
@@ -19,11 +20,10 @@ onChat((cmdObject) => {
         } else if (cmdObject.content === clear[0]) {
             let player = getPlayerByNAME(cmdObject.sender);
             let playerName = player.name;
-
             for (i = 0; i < 30; i++) {
-                system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tell @a \n`, () => {};
+                system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tell @a \n`, () => {});
             }
-            system.executeCommand(`execute @a[name="$playerName}",tag=staff] ~ ~ ~ tell @a §bChat Cleared!`, () => {});
+            system.executeCommand(`execute @a[name="$playerName}",tag=staff] ~ ~ ~ say §bChat Cleared!`, () => {});
         }
     } catch(err) {
         console.error(err);
