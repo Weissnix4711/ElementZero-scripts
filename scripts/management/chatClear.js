@@ -21,7 +21,7 @@ onChat((cmdObject) => {
             let player = getPlayerByNAME(cmdObject.sender);
             let playerName = player.name;
             for (i = 0; i < 30; i++) {
-                system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tell @a \n`, () => {});
+                system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tellraw @a {"text":" "}`, () => {});
             }
             system.executeCommand(`execute @a[name="$playerName}",tag=staff] ~ ~ ~ say §bChat Cleared!`, () => {});
         }
