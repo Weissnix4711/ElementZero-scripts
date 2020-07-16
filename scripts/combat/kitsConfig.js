@@ -21,7 +21,7 @@ export default config = {
         "staffOnly": true,
         "kits": [
             "admin": {
-            }
+            },
             "troll": {
             }
         ]
