@@ -2,7 +2,7 @@
 A system to quickly clear chat! more info with .cc help command.
 Made by nickg_two
 
-v1
+v1.1
 */
 
 import {
@@ -12,6 +12,10 @@ import {
 import {
     onChat
 } from "ez:chat";
+
+import {
+    executeCommand
+} from "ez:command";
 
 const system = server.registerSystem(0, 0);
 
@@ -27,10 +31,10 @@ onChat((cmdObject) => {
         } else if (cmdObject.content === clear[0]) {
             let player = getPlayerByNAME(cmdObject.sender);
             let playerName = player.name;
-            for (i = 0; i < 30; i++) {
-                system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tellraw @a {"text":" "}`, () => {});
+            for (let i = 0; i < 30; i++) {
+                system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tellraw @a {"rawtext":[{"text":"\n"}]}`, () => {});
             }
-            system.executeCommand(`execute @a[name="$playerName}",tag=staff] ~ ~ ~ say §bChat Cleared!`, () => {});
+            system.executeCommand(`execute @a[name="${playerName}",tag=staff] ~ ~ ~ tellraw @a {"rawtext":[{"text":"§bChat Cleared!"}]}`, () => {});
         }
     } catch(err) {
         console.error(err);
