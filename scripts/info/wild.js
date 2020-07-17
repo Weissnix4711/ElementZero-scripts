@@ -1,7 +1,8 @@
 /*
 A .wild command to teleport you to a random location
-
 Original concept by nickg two
+
+v0.1
 */
 
 import {

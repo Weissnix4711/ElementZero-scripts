@@ -1,3 +1,10 @@
+/*
+Plays a orb sound effect when player hits entity with bow.
+Also plays thunder sound effect when a player kills another player.
+
+v1
+*/
+
 import {
     executeCommand
 } from "ez:command";

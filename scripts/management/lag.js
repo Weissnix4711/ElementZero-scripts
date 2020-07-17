@@ -1,6 +1,8 @@
 /*
 Adds a .lag command for staff members, to clear lag.
-Player must have staff tag to use the command. made by nickg two
+Player must have staff tag to use the command. Made by nickg two
+
+v1
 */
 
 import {

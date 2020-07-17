@@ -1,3 +1,9 @@
+/*
+Adds a few chat commands. Easily customisable.
+
+v1
+*/
+
 import {
     getPlayerByNAME
 } from "ez:player";

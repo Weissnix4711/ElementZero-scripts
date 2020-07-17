@@ -1,3 +1,10 @@
+/*
+Displays health bar above player's head.
+Uses scoreboard objectives and the belowname display option.
+
+v1
+*/
+
 import {
     getPlayerByNAME
 } from "ez:player";

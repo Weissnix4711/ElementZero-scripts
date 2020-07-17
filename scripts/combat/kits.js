@@ -1,3 +1,12 @@
+/*
+A kit system made by nickg two, it has 7 kits.
+With special features like only allowing 1 kit per player, to see what kits are availible, type .kit in chat.
+
+For staff wanting to use the staff kit, make sure you have the staff tag (/tag @s add staff)
+
+v2 - v3 Coming soon
+*/
+
 import {
     getPlayerByNAME
 } from "ez:player";
@@ -12,8 +21,6 @@ import {
 
 const system = server.registerSystem(0, 0);
 console.log("kits2.js loaded");
-
-//A kit system made by nickg two, it has 7 kits. With special features like only allowing 1 kit per player, to see what kits are availible, type .kit in chat. for staff wanting to use the staff kit, make sure you have the staff tag (/tag @s add staff)
 
 let test = ['.kit'];
 let kita = ['.kit archer'];

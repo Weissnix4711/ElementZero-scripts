@@ -1,3 +1,12 @@
+/*
+Shows a personalised greeting message for each player when they join.
+Uses scorebaords to keep track of old and new players.
+
+Also sends a global message when a new player joins.
+
+v1
+*/
+
 import {
     onPlayerInitialized
 } from "ez:player";

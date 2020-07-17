@@ -1,6 +1,15 @@
+/*
+A system that allows players to get economy money for doing in game jobs, such as hunting, mining and farming.
+Current stats is a bit of a mess, updates coming soon
+
+Made by nickg two
+
+v0.1
+*/
+
 import {
-	getBalance,
-	updateBalance
+    getBalance,
+    updateBalance
 } from "ez:economy";
 
 import {
@@ -10,9 +19,6 @@ import {
 import {
     onChat
 } from "ez:chat";
-
-//A system that allows players to get economy money for doing in game jobs, such as hunting, mining and farming. its kinda a mess right now, updates coming soon
-//to do: organise, make farming only work on full grown crops, add more jobs. if you want to help, contact nick, made by nickg two
 
 const system = server.registerSystem(0, 0);
 
@@ -229,4 +235,4 @@ system.listenForEvent("minecraft:player_destroyed_block", ({data: eventData}) =>
     }
 });
 
-console.log("Jobs.js loaded");
+console.log("jobs.js loaded");

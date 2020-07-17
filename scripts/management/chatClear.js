@@ -1,3 +1,10 @@
+/*
+A system to quickly clear chat! more info with .cc help command.
+Made by nickg_two
+
+v1
+*/
+
 import {
     getPlayerByNAME
 } from "ez:player";
@@ -9,8 +16,6 @@ import {
 const system = server.registerSystem(0, 0);
 
 console.log("chatClear.js loaded");
-
-//a system to quickly clear chat! more info with .cc help command. made by nickg_two
 
 let clearHelp = ['.cc help'];
 let clear = ['.cc'];

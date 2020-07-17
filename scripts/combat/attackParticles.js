@@ -1,3 +1,9 @@
+/*
+Blood (redstone) particles on entity hit
+
+v1
+*/
+
 const system = server.registerSystem(0, 0);
 
 console.log("attackParticles.js loaded");
