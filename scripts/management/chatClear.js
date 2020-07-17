@@ -10,6 +10,8 @@ const system = server.registerSystem(0, 0);
 
 console.log("chatClear.js loaded");
 
+//a system to quickly clear chat! more info with .cc help command. made by nickg_two
+
 let clearHelp = ['.cc help'];
 let clear = ['.cc'];
 
