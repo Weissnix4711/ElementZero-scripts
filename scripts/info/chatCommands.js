@@ -26,8 +26,6 @@ onChat((cmdObject) => {
 
     let player = getPlayerByNAME(cmdObject.sender);
     let playerName = player.name;
-    let playerXuid = player.xuid;
-    let playerUuid = player.uuid;
     let infoMessage = `§r§k§6||§r§eWelcome to...§r§k§6||\n§r§k§6||§r§4  Mine9 SMP  §r§k§6||\n§r§b-----------------\n\n§r§4Whitelist only!\n§r§eSee our website for more details\n§r§6mine9.ddns.net`
 
     if (cmdObject.content == info) {
