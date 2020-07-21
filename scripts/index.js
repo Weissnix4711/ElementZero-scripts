@@ -8,3 +8,4 @@ If you don't want to use a specifc script, just comment out the import command.
 import "./combat/index.js"
 import "./info/index.js"
 import "./management/index.js"
+import "./economy/index.js"
