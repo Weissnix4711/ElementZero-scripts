@@ -6,7 +6,9 @@ It also changes the font, making it slightly smaller.
 
 Made by Weissnix4711
 
-v1.0
+Todo: tags still broken. Comment out for now
+
+v1.1
 */
 
 import {
@@ -17,7 +19,8 @@ import {
 } from "ez:player";
 
 import {
-    sidebar
+    sidebar,
+    list
 } from "ez:scoreboard";
 
 import {
@@ -26,6 +29,8 @@ import {
 
 const system = server.registerSystem(0, 0);
 
+console.log("scoreboard.js loaded")
+
 var interval;
 
 onPlayerInitialized(player => {
@@ -33,18 +38,31 @@ onPlayerInitialized(player => {
         //first init
         let playerData = getPlayerByNAME(player.name);
         sidebar.init(playerData, "§l§fJemix §bMC", true);
+        list.init(playerData, "§lJemix §bMC", false); //descending - allows to set important notifications straight to the top.
 
         let i = 0;
 
-        //update scoreboard every 20
+        //update scoreboard every 15
         interval = setInterval(() => {
+            //variables
             let money = getBalance(playerData);
             let playerCount = getPlayerList().length;
 
+            //tags - broken. need to fix
+            //let tagsArray = system.getComponent(player, "minecraft:tag");
+            //console.log(tagsArray);
+            //let levelRegex= /level(.+)/;
+            //let mineLevel = tagsArray.find(value => levelRegex.search(value));
+            
+            //static testing variables for now
+            let rank = "testrank";
+            let mineLevel = "1";
+
+            //count and deinit
             if (i >= 11) {i = 0;}
-        
             sidebar.deinit(playerData);
 
+            //animates sidebar
             switch (i) {
                 case 0: //all light
                     sidebar.init(playerData, "§l§fJemix §bMC", true);
@@ -83,7 +101,7 @@ onPlayerInitialized(player => {
                     sidebar.init(playerData, "§l§7Jemix §3MC", true);
             }
 
-            //---
+            //SIDEBAR
             sidebar.set(playerData, 0, "⭕----------------", 0);
             sidebar.set(playerData, 1, "", 1);
             //ip
@@ -105,8 +123,25 @@ onPlayerInitialized(player => {
             //players
             sidebar.set(playerData, 14, `⭕§lPlayers: §r${playerCount}/§b50`, 14);
 
+            //LIST
+            list.set(playerData, 26, "⭕§aWelcome,", 26)
+            list.set(playerData, 25, `⭕§b${player.name}`, 25)
+            list.set(playerData, 24, "      ", 24)
+
+            list.set(playerData, 23, `⭕§l§4Level: §r§c${mineLevel}`, 23);
+            list.set(playerData, 22, `⭕§l§2Rank: §r${rank}`, 22);
+            list.set(playerData, 21, `⭕§l§6Jems: §r§e${money}`, 21)
+            list.set(playerData, 20, "     ", 20)
+
+            //rules
+            list.set(playerData, 19, "⭕§l§bRules:", 19);
+            list.set(playerData, 18, "⭕§dDo not hack", 18);
+            list.set(playerData, 17, "⭕§dOr gltich", 17);
+            list.set(playerData, 16, "⭕§dBe respectful", 16);
+            list.set(playerData, 15, "⭕§dMojang's ToS", 15);
+
             i++;
-        }, 10)
+        }, 15)
     } catch(err) {
         console.log(err);
     }
@@ -118,6 +153,7 @@ onPlayerLeft(player => {
         clearInterval(interval);
         //destroy scoreboard for player
         sidebar.deinit(getPlayerByNAME(player.name));
+        list.deinit(getPlayerByNAME(player.name));
     } catch(err) {
         console.log(err);
     }
