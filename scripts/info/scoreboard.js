@@ -41,28 +41,46 @@ onPlayerInitialized(player => {
             let money = getBalance(playerData);
             let playerCount = getPlayerList().length;
 
-            if (i >= 6) {i = 0;}
+            if (i >= 11) {i = 0;}
         
             sidebar.deinit(playerData);
 
             switch (i) {
-                case 0:
+                case 0: //all light
                     sidebar.init(playerData, "§l§fJemix §bMC", true);
                     break;
-                case 1:
+                case 1: //j
                     sidebar.init(playerData, "§l§7J§femix §bMC", true);
                     break;
-                case 2:
+                case 2: //e
                     sidebar.init(playerData, "§l§fJ§7e§fmix §bMC", true);
                     break;
-                case 3:
+                case 3: //m
                     sidebar.init(playerData, "§l§fJe§7m§fix §bMC", true);
                     break;
-                case 4:
+                case 4: //i
                     sidebar.init(playerData, "§l§fJem§7i§fx §bMC", true);
                     break;
-                case 5:
+                case 5: //x
                     sidebar.init(playerData, "§l§fJemi§7x §bMC", true);
+                    break;
+                case 6: //m
+                    sidebar.init(playerData, "§l§fJemix §3M§bC", true);
+                    break;
+                case 7: //c
+                    sidebar.init(playerData, "§l§fJemix §bM§3C", true);
+                    break;
+                case 8:
+                    //all dark
+                    sidebar.init(playerData, "§l§7Jemix §3MC", true);
+                    break;
+                case 9:
+                    //all light
+                    sidebar.init(playerData, "§l§fJemix §bMC", true);
+                    break;
+                case 10:
+                    //all dark
+                    sidebar.init(playerData, "§l§7Jemix §3MC", true);
             }
 
             //---
@@ -83,12 +101,12 @@ onPlayerInitialized(player => {
             sidebar.set(playerData, 11, "⭕---------------", 11);
             sidebar.set(playerData, 12, "    ", 12);
             //money
-            sidebar.set(playerData, 13, `⭕Jems: §e${money}`, 13);
+            sidebar.set(playerData, 13, `⭕§lJems: §r§e${money}`, 13);
             //players
-            sidebar.set(playerData, 15, `⭕Players: ${playerCount}/§b50`, 15);
+            sidebar.set(playerData, 14, `⭕§lPlayers: §r${playerCount}/§b50`, 14);
 
             i++;
-        }, 20)
+        }, 10)
     } catch(err) {
         console.log(err);
     }
