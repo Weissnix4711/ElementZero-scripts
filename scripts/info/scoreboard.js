@@ -4,11 +4,12 @@ Custom scoreboard script.
 Note: the "⭕" character is invisible, and makes each line unique.
 It also changes the font, making it slightly smaller.
 
+Tags work on the list menu, although the code to grab the tags is really ugly.
+Currently, the rank will be any rank beginning with "rank", and "level" for the mine level. It displays the entire tag name, although you could crop out the beginning if you wish.
+
 Made by Weissnix4711
 
-Todo: tags still broken. Comment out for now
-
-v1.1
+v1.2
 */
 
 import {
@@ -48,15 +49,26 @@ onPlayerInitialized(player => {
             let money = getBalance(playerData);
             let playerCount = getPlayerList().length;
 
-            //tags - broken. need to fix
-            //let tagsArray = system.getComponent(player, "minecraft:tag");
-            //console.log(tagsArray);
-            //let levelRegex= /level(.+)/;
-            //let mineLevel = tagsArray.find(value => levelRegex.search(value));
-            
-            //static testing variables for now
-            let rank = "testrank";
-            let mineLevel = "1";
+            //tags - oh god oh god oh god
+            //this is really ugly
+            function mineLevel(callback) {
+                system.executeCommand(`tag "${player.name}" list`, (result) => {
+                    let message = result.data.statusMessage;
+                    let levelRegex= /.*level.+/;
+                    let tags = message.substring(message.indexOf(":")+1,message.length).trim().split(", ");
+                    let level = tags.find(function (value) {if (levelRegex.test(value)) {return value}});
+                    callback(level)
+                });
+            }
+            function rank(callback) {
+                system.executeCommand(`tag "${player.name}" list`, (result) => {
+                    let message = result.data.statusMessage;
+                    let rankRegex= /.*rank.+/;
+                    let tags = message.substring(message.indexOf(":")+1,message.length).trim().split(", ");
+                    let rank = tags.find(function (value) {if (rankRegex.test(value)) {return value}});
+                    callback(rank)
+                });
+            }
 
             //count and deinit
             if (i >= 11) {i = 0;}
@@ -128,8 +140,12 @@ onPlayerInitialized(player => {
             list.set(playerData, 25, `⭕§b${player.name}`, 25)
             list.set(playerData, 24, "      ", 24)
 
-            list.set(playerData, 23, `⭕§l§4Level: §r§c${mineLevel}`, 23);
-            list.set(playerData, 22, `⭕§l§2Rank: §r${rank}`, 22);
+            mineLevel(function(result) {
+                list.set(playerData, 23, `⭕§l§4Level: §r§c${result}`, 23);
+            })
+            rank(function(result) {
+                list.set(playerData, 22, `⭕§l§2Rank: §r${result}`, 22);
+            })
             list.set(playerData, 21, `⭕§l§6Jems: §r§e${money}`, 21)
             list.set(playerData, 20, "     ", 20)
 
@@ -143,7 +159,7 @@ onPlayerInitialized(player => {
             i++;
         }, 15)
     } catch(err) {
-        console.log(err);
+        console.error(err);
     }
 })
 
@@ -155,6 +171,6 @@ onPlayerLeft(player => {
         sidebar.deinit(getPlayerByNAME(player.name));
         list.deinit(getPlayerByNAME(player.name));
     } catch(err) {
-        console.log(err);
+        console.error(err);
     }
 })
