@@ -9,7 +9,7 @@ Currently, the rank will be any rank beginning with "rank", and "level" for the 
 
 Made by Weissnix4711
 
-v1.2
+v1.3
 */
 
 import {
@@ -32,8 +32,6 @@ const system = server.registerSystem(0, 0);
 
 console.log("scoreboard.js loaded")
 
-var interval;
-
 onPlayerInitialized(player => {
     try {
         //first init
@@ -44,7 +42,11 @@ onPlayerInitialized(player => {
         let i = 0;
 
         //update scoreboard every 15
-        interval = setInterval(() => {
+        var interval = setInterval(() => {
+
+            //debugging only! spams console
+            //console.log(player.name);
+
             //variables
             let money = getBalance(playerData);
             let playerCount = getPlayerList().length;
@@ -157,19 +159,22 @@ onPlayerInitialized(player => {
             list.set(playerData, 15, "⭕§dMojang's ToS", 15);
 
             i++;
-        }, 15)
-    } catch(err) {
-        console.error(err);
-    }
-})
 
-onPlayerLeft(player => {
-    try {
-        //stop interval
-        clearInterval(interval);
-        //destroy scoreboard for player
-        sidebar.deinit(getPlayerByNAME(player.name));
-        list.deinit(getPlayerByNAME(player.name));
+            onPlayerLeft(playerLeave => {
+                try {
+                    if (playerLeave.name === player.name) {
+                        //stop interval
+                        clearInterval(interval);
+                        //destroy scoreboard for player
+                        sidebar.deinit(getPlayerByNAME(playerLeave.name));
+                        list.deinit(getPlayerByNAME(playerLeave.name));
+                    }
+                } catch(err) {
+                    console.error(err);
+                }
+            })
+
+        }, 15)
     } catch(err) {
         console.error(err);
     }
