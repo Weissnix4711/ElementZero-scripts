@@ -3,7 +3,9 @@ Rank system, with chat command. Commands editable below, in section VARIABLES.
 
 Regex is used for any subCommands.
 
-v0.1 - alpha 2
+Check ranksConfig.js for configuration details.
+
+v1
 */
 
 import config from './ranksConfig.js';
@@ -42,6 +44,7 @@ onChat((cmdObject) => {
         if (!cmdObject.content.startsWith(baseCommand)) {
             return;
         }
+
         //if exactly baseCommand, show info
         if (cmdObject.content === baseCommand) {
             system.executeCommand(`tellraw @a[name="${cmdObject.sender}"] {"rawtext":[{"text":"${infoMessage}"}]}`, () => {})
@@ -59,13 +62,13 @@ onChat((cmdObject) => {
             let playerName = args[1];
             let rank = args[2];
             //run function
-            setRank(playerName, rank);
+            setRank(cmdObject.sender, playerName, rank);
         }
         //Remove sub-command
         if (removeRegex.test(subCommand)) {
             let playerName = subCommand.match(removeRegex)[1];
             //run function remove rank
-            removeRank(playerName);
+            removeRank(cmdObject.sender, playerName);
         }
 
     } catch(err) {
@@ -78,32 +81,32 @@ onChat((cmdObject) => {
 //===============
 
 //get rank
-function rank(callback) {
-    system.executeCommand(`tag "${player.name}" list`, (result) => {
+function rank(playerName, callback) {
+    system.executeCommand(`tag "${playerName}" list`, (result) => {
         let message = result.data.statusMessage;
         let rankRegex= /.*rank-.+/;
         let tags = message.substring(message.indexOf(":")+1,message.length).trim().split(", ");
-        let rank = tags.find(function (value) {if (rankRegex.test(value)) {return value}});
+        let uncleaned = tags.find(function (value) {if (rankRegex.test(value)) {return value}});
+        let rank = uncleaned.match(/\u00A7a(.+)\u00A7r/)[1];
         callback(rank)
     });
 }
 
 //SET RANK
-export function setRank(playerName, rank) {
+export function setRank(sender, playerName, rank) {
     try {
         console.log(`Ranks: Try to set ${playerName}'s rank to ${rank}.`)
 
         let customName = eval(`ranksConfig.${rank}.prefix`);
-        console.log("ree")
 
         //set prefix and level tag
-        system.executeCommand(`execute @a[name="${playerName}"] ~ ~ ~ custom-name set prefix @s "${customName}"`, () => {});
-        system.executeCommand(`execute @a[name="${playerName}"] ~ ~ ~ tag @s add "rank-${rank}"`, () => {});
+        system.executeCommand(`execute @a[name="${sender}",tag=staff] ~ ~ ~ execute @a[name="${playerName}"] ~ ~ ~ custom-name set prefix @s "${customName}"`, () => {});
+        system.executeCommand(`execute @a[name="${sender}",tag=staff] ~ ~ ~ execute @a[name="${playerName}"] ~ ~ ~ tag @s add "rank-${rank}"`, () => {});
 
         //particles
         for (let i = 0; i < eval(`ranksConfig.${rank}.particles`).length; i++) {
             let p = eval(`ranksConfig.${rank}.particles[i]`);
-            system.executeCommand(`execute @a[name="${playerName}"] ~ ~ ~ tag @s add "p${p}"`, () => {});
+            system.executeCommand(`execute @a[name="${sender}",tag=staff] ~ ~ ~ execute @a[name="${playerName}"] ~ ~ ~ tag @s add "p${p}"`, () => {});
         }
 
         console.log("Ranks: Done!")
@@ -113,25 +116,27 @@ export function setRank(playerName, rank) {
 }
 
 //REMOVE RANK
-export function removeRank(playerName) {
+export function removeRank(sender, playerName) {
     try {
         console.log(`Ranks: Try to remove rank from ${playerName}.`)
 
-        //find current rank
-        let currentRank = rank(function(result) {
-            return result;
-        });
-
         //remove custom name
-        system.executeCommand(`execute @a[name="${playerName}"] ~ ~ ~ custom-name clear @s""`, () => {});
+        system.executeCommand(`execute @a[name="${sender}",tag=staff] ~ ~ ~ execute @a[name="${playerName}"] ~ ~ ~ custom-name clear @s`, (blah) => {console.log(JSON.stringify(blah))});
 
-        //remove current rank
-        system.executeCommand(`execute @a[name="${playerName}"] ~ ~ ~ tag @s remove "${currentRank}"`, () => {});
+        rank(playerName, function(rank) {
+            //remove current rank
+            system.executeCommand(`execute @a[name="${sender}",tag=staff] ~ ~ ~ execute @a[name="${playerName}"] ~ ~ ~ tag @s remove "${rank}"`, () => {});
+            //remove particles from current rank
+            let pureRankName = rank.match(/rank-(.+)/)[1];
+            let particleTagsArray = eval(`ranksConfig.${pureRankName}.particles`);
+            for (let i = 0; i < particleTagsArray.length; i++) {
+                let p = eval(`ranksConfig.${pureRankName}.particles`)[i];
+                let q = `p${p}`;
+                system.executeCommand(`execute @a[name="${sender}",tag=staff] ~ ~ ~ execute @a[name="${playerName}"] ~ ~ ~ tag @s remove "${q}"`, () => {});
+            }
 
-        //remove particles from current rank
-        system.executeCommand(`execute @a[name="${playerName}"] ~ ~ ~ tag @s remove "${currentRank}"`, () => {});
-
-        console.log("Ranks: Done!")
+            console.log("Ranks: Done!")
+        });
     } catch(err) {
         console.error(err);
     }
